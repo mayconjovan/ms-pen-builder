@@ -12,19 +12,18 @@ public class OuterTubeCover {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String description;
-    private Double size;
     private String materialType;
+    private String color;
 
     public OuterTubeCover() {
     }
 
-    public OuterTubeCover(UUID id, String description, Double size, String materialType) {
+    public OuterTubeCover(UUID id, String description, String color, String materialType) {
         this.id = id;
         this.description = description;
-        this.size = size;
+        this.color = color;
         this.materialType = materialType;
     }
-
 
     public UUID getId() {
         return id;
@@ -38,14 +37,6 @@ public class OuterTubeCover {
         return description;
     }
 
-    public Double getSize() {
-        return size;
-    }
-
-    public void setSize(Double size) {
-        this.size = size;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -56,5 +47,13 @@ public class OuterTubeCover {
 
     public void setMaterialType(String materialType) {
         this.materialType = materialType;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

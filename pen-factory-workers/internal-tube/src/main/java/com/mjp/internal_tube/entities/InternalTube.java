@@ -12,19 +12,18 @@ public class InternalTube {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String description;
-    private Double size;
     private String materialType;
+    private String color;
 
     public InternalTube() {
     }
 
-    public InternalTube(UUID id, String description, Double size, String materialType) {
+    public InternalTube(UUID id, String description, String materialType, String color) {
         this.id = id;
         this.description = description;
-        this.size = size;
         this.materialType = materialType;
+        this.color = color;
     }
-
 
     public UUID getId() {
         return id;
@@ -38,12 +37,12 @@ public class InternalTube {
         return description;
     }
 
-    public Double getSize() {
-        return size;
+    public String getColor() {
+        return color;
     }
 
-    public void setSize(Double size) {
-        this.size = size;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public void setDescription(String description) {

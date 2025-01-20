@@ -12,16 +12,14 @@ public class BallSupportCoupler {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String description;
-    private Double size;
     private String materialType;
 
     public BallSupportCoupler() {
     }
 
-    public BallSupportCoupler(UUID id, String description, Double size, String materialType) {
+    public BallSupportCoupler(UUID id, String description, String materialType) {
         this.id = id;
         this.description = description;
-        this.size = size;
         this.materialType = materialType;
     }
 
@@ -38,13 +36,6 @@ public class BallSupportCoupler {
         return description;
     }
 
-    public Double getSize() {
-        return size;
-    }
-
-    public void setSize(Double size) {
-        this.size = size;
-    }
 
     public void setDescription(String description) {
         this.description = description;

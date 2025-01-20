@@ -12,16 +12,16 @@ public class ExternalTube {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String description;
-    private Double size;
+    private String color;
     private String materialType;
 
     public ExternalTube() {
     }
 
-    public ExternalTube(UUID id, String description, Double size, String materialType) {
+    public ExternalTube(UUID id, String description, String color, String materialType) {
         this.id = id;
         this.description = description;
-        this.size = size;
+        this.color = color;
         this.materialType = materialType;
     }
 
@@ -38,12 +38,12 @@ public class ExternalTube {
         return description;
     }
 
-    public Double getSize() {
-        return size;
+    public String getColor() {
+        return color;
     }
 
-    public void setSize(Double size) {
-        this.size = size;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public void setDescription(String description) {

@@ -12,16 +12,14 @@ public class BallSupportCouplerInkTube {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String description;
-    private Double size;
     private String materialType;
 
     public BallSupportCouplerInkTube() {
     }
 
-    public BallSupportCouplerInkTube(UUID id, String description, Double size, String materialType) {
+    public BallSupportCouplerInkTube(UUID id, String description, String materialType) {
         this.id = id;
         this.description = description;
-        this.size = size;
         this.materialType = materialType;
     }
 
@@ -36,14 +34,6 @@ public class BallSupportCouplerInkTube {
 
     public String getDescription() {
         return description;
-    }
-
-    public Double getSize() {
-        return size;
-    }
-
-    public void setSize(Double size) {
-        this.size = size;
     }
 
     public void setDescription(String description) {
