@@ -4,11 +4,12 @@ public record PenDTO(Ink ink,
                      Ball ball,
                      BallSupport ballSupport,
                      BallSupportCoupler ballSupportCoupler,
-                     BallSupportCouplesInkTube ballSupportCouplesInkTube,
+                     BallSupportCoupleInkTube ballSupportCouplesInkTube,
                      ExternalTube externalTube,
                      InternalTube internalTube,
                      OuterTubeCover outerTubeCover,
-                     TipCap tipCap) {
+                     TipCap tipCap,
+                     Integer quantity) {
 
 
 }

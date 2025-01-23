@@ -18,18 +18,10 @@ public class OrderController {
         this.service = service;
     }
 
-    @Value("${some-key.property2}")
-    private String testConfig;
 
     @PostMapping
-    public ResponseEntity<OrderProcessDTO> createPen(@RequestBody PenDTO pen, @RequestParam("quantity") Integer quantity){
-        OrderProcessDTO pen1 = service.createPen(pen, quantity);
+    public ResponseEntity<OrderProcessDTO> createPen(@RequestBody PenDTO pen){
+        OrderProcessDTO pen1 = service.createPen(pen);
         return ResponseEntity.ok().body(pen1);
-    }
-
-    @GetMapping(value = "/configs")
-    public ResponseEntity<String> findConfig() {
-        System.out.println("CONFIG = " + testConfig);
-        return ResponseEntity.ok(testConfig);
     }
 }

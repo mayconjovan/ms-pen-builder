@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_ball_support_coupler")
+@Table(name = "tb_factory_ball_support_coupler")
 public class FactoryBallSupportCoupler {
 
     @Id

@@ -1,0 +1,17 @@
+#This file has configs default for all microservices
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pen-parts
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true

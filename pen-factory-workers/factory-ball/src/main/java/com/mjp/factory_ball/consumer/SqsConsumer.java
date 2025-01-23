@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class SqsConsumer {
 
-    private FactoryBallService service;
+    private final FactoryBallService service;
 
     public SqsConsumer(FactoryBallService service) {
         this.service = service;
     }
 
-    @SqsListener("factory-ball")
+    @SqsListener("${aws.sqs.queue}")
     public void listen(FactoryBallDetails FactoryBallDetails) {
         service.createFactoryBall(FactoryBallDetails);
     }

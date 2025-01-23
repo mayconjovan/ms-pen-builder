@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/pen-processor-order
-some-key:
-  property1: Valor do servico
-  property2: XOPTO

@@ -3,10 +3,21 @@ spring:
     config:
       server:
         native:
-          search-locations: file:src/main/java/com/mjp/config_server/configs/ # Diretório local onde estão os arquivos de configuração
+          search-locations: file:src/main/java/com/mjp/config_server/workers_configs/ # Diretório local onde estão os arquivos de configuração
   profiles:
     active: native # Ativa o modo nativo para leitura de arquivos locais
 
 server:
   port: 8888
   name: config-server
+
+aws:
+  sns:
+    endpoint: http://localhost:4566
+    topic-name: factory-topic
+  sqs:
+    queue-name: factory-ball
+    endpoint: http://localhost:4566
+  region: us-east-1
+  accessKey: test
+  secretKey: test
