@@ -1,0 +1,8 @@
+server:
+  name: factory-ink
+  port: 8006
+
+aws:
+  sqs:
+    queue: factory-ink
+

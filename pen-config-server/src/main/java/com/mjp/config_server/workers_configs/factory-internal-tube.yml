@@ -1,0 +1,8 @@
+server:
+  name: factory-internal-tube
+  port: 8007
+
+aws:
+  sqs:
+    queue: factory-internal-tube
+

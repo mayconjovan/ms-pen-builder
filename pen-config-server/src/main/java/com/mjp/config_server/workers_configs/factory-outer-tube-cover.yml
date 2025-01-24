@@ -1,0 +1,8 @@
+server:
+  name: factory-outer-tube-cover
+  port: 8008
+
+aws:
+  sqs:
+    queue: factory-outer-tube-cover
+

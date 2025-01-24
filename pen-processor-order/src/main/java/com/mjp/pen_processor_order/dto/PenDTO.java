@@ -1,5 +1,7 @@
 package com.mjp.pen_processor_order.dto;
 
+import java.util.UUID;
+
 public record PenDTO(Ink ink,
                      Ball ball,
                      BallSupport ballSupport,
@@ -8,8 +10,6 @@ public record PenDTO(Ink ink,
                      ExternalTube externalTube,
                      InternalTube internalTube,
                      OuterTubeCover outerTubeCover,
-                     TipCap tipCap,
-                     Integer quantity) {
-
-
+                     TipCap tipCap
+                    ) {
 }

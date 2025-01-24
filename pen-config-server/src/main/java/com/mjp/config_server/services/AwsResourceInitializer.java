@@ -4,6 +4,13 @@ import com.mjp.config_server.configs.SqsConfig;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
+import software.amazon.awssdk.services.secretsmanager.model.CreateSecretRequest;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.CreateTopicRequest;
 import software.amazon.awssdk.services.sns.model.CreateTopicResponse;
@@ -19,23 +26,57 @@ public class AwsResourceInitializer {
     private final SqsClient sqsClient;
     private final SnsClient snsClient;
     private final SqsConfig sqsConfig;
+    private final S3Client s3Client;
+    private final SecretsManagerClient secretsManagerClient;
+
+    @Value("${s3.bucket-name}")
+    private String bucketName;
 
     @Value("${aws.sns.topic-name}")
     private String topicName;
 
-    public AwsResourceInitializer(SqsClient sqsClient, SnsClient snsClient, SqsConfig sqsConfig) {
+    public AwsResourceInitializer(SqsClient sqsClient, SnsClient snsClient, SqsConfig sqsConfig, S3Client s3Client, SecretsManagerClient secretsManagerClient) {
         this.sqsClient = sqsClient;
         this.snsClient = snsClient;
         this.sqsConfig = sqsConfig;
+        this.s3Client = s3Client;
+        this.secretsManagerClient = secretsManagerClient;
     }
 
     @PostConstruct
     public void initializeAwsResources() {
-        CreateTopicResponse topicResponse = snsClient.createTopic(CreateTopicRequest.builder()
-                .name(topicName)
-                .build());
-        String topicArn = topicResponse.topicArn();
+        String topicArn = initializeSnsTopic();
+        initializeSqsQueues(topicArn);
+        initializeS3Bucket();
+        initializeSecretsManager();
+//        initializeApiGateway();
 
+
+
+
+    }
+
+    private void initializeSecretsManager() {
+        String secretName = "dbPassword";
+        String secretValue = "123456";
+
+        secretsManagerClient.createSecret(CreateSecretRequest.builder()
+                .name(secretName)
+                .secretString(secretValue)
+                .build());
+    }
+
+    private void initializeS3Bucket() {
+
+
+        s3Client.createBucket(
+                CreateBucketRequest
+                        .builder()
+                        .bucket(bucketName)
+                        .build());
+    }
+
+    private void initializeSqsQueues(String topicArn) {
         sqsConfig.getQueues().values().forEach((queueName -> {
             try {
                 CreateQueueResponse queueResponse = sqsClient.createQueue(CreateQueueRequest.builder().queueName(queueName).build());
@@ -64,6 +105,13 @@ public class AwsResourceInitializer {
         }));
     }
 
+    private String initializeSnsTopic() {
+        CreateTopicResponse topicResponse = snsClient.createTopic(CreateTopicRequest.builder()
+                .name(topicName)
+                .build());
+        return topicResponse.topicArn();
+    }
+
     private static Map<QueueAttributeName, String> getQueueAttributeNameStringMap(String queueArn, String topicArn) {
         String policy = """
                     {
@@ -85,6 +133,5 @@ public class AwsResourceInitializer {
                 """.formatted(queueArn, topicArn);
 
         return Map.of(QueueAttributeName.POLICY, policy);
-
     }
 }

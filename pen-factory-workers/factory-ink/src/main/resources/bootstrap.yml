@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: factory-ink
+  cloud:
+    config:
+      uri: http://localhost:8888

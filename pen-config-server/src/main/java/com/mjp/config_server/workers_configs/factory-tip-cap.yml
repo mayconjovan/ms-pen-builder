@@ -1,0 +1,8 @@
+server:
+  name: factory-tip-cap
+  port: 8009
+
+aws:
+  sqs:
+    queue: factory-tip-cap
+

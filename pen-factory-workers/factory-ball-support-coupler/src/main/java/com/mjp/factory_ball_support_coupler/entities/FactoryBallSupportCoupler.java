@@ -1,5 +1,6 @@
 package com.mjp.factory_ball_support_coupler.entities;
 
+import com.mjp.factory_ball_support_coupler.records.FactoryBallSupportCouplerDetails;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -15,6 +16,11 @@ public class FactoryBallSupportCoupler {
     private String materialType;
 
     public FactoryBallSupportCoupler() {
+    }
+
+    public FactoryBallSupportCoupler(FactoryBallSupportCouplerDetails details) {
+        this.description = details.description();
+        this.materialType = details.materialType();
     }
 
     public FactoryBallSupportCoupler(UUID id, String description, String materialType) {

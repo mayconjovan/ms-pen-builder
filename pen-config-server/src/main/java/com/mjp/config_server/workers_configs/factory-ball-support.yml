@@ -5,3 +5,4 @@ server:
 aws:
   sqs:
     queue: factory-ball-support
+

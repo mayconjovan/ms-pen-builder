@@ -26,7 +26,9 @@ aws:
       internal-tube: factory-internal-tube
       outer-tube-cover: factory-outer-tube-cover
       tip-cap: factory-tip-cap
-
+  endpoint: http://localhost:4566
   region: us-east-1
   accessKey: test
   secretKey: test
+s3:
+  bucket-name: config-bucket

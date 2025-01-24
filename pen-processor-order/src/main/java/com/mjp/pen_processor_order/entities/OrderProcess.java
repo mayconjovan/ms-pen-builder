@@ -12,21 +12,20 @@ public class OrderProcess {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private Instant orderCreated;
+    private Instant orderCreatedAt;
 
-    @OneToOne
-    @MapsId
-    private Pen pen;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer orderNumber;
+    private Double totalValue;
     private Integer quantity;
 
     public OrderProcess() {
     }
 
-    public OrderProcess(UUID id, Instant orderCreated, Pen pen, Integer quantity) {
+    public OrderProcess(UUID id, Instant orderCreated, Integer orderNumber, Integer quantity) {
         this.id = id;
-        this.orderCreated = orderCreated;
-        this.pen = pen;
+        this.orderCreatedAt = orderCreated;
+        this.orderNumber = orderNumber;
         this.quantity = quantity;
     }
 
@@ -38,20 +37,12 @@ public class OrderProcess {
         this.id = id;
     }
 
-    public Instant getOrderCreated() {
-        return orderCreated;
+    public Instant getOrderCreatedAt() {
+        return orderCreatedAt;
     }
 
-    public void setOrderCreated(Instant orderCreated) {
-        this.orderCreated = orderCreated;
-    }
-
-    public Pen getPen() {
-        return pen;
-    }
-
-    public void setPen(Pen pen) {
-        this.pen = pen;
+    public void setOrderCreatedAt(Instant orderCreatedAt) {
+        this.orderCreatedAt = orderCreatedAt;
     }
 
     public Integer getQuantity() {
@@ -60,5 +51,21 @@ public class OrderProcess {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public Double getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(Double totalValue) {
+        this.totalValue = totalValue;
     }
 }

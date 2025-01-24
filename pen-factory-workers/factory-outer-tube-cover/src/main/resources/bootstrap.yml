@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: factory-outer-tube-cover
+  cloud:
+    config:
+      uri: http://localhost:8888

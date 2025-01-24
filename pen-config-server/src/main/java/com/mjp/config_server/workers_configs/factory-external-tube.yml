@@ -1,0 +1,8 @@
+server:
+  name: factory-external-tube
+  port: 8005
+
+aws:
+  sqs:
+    queue: factory-external-tube
+

@@ -20,7 +20,6 @@ public class SnsPublisher {
 
 
     public void publishMessage(String message) {
-        // Obter o ARN do tópico
         ListTopicsResponse topicsResponse = snsClient.listTopics();
         String topicArn = topicsResponse.topics().stream()
                 .filter(topic -> topic.topicArn().endsWith(":" + topicName))
@@ -28,7 +27,6 @@ public class SnsPublisher {
                 .orElseThrow(() -> new RuntimeException("Tópico não encontrado"))
                 .topicArn();
 
-        // Publicar a mensagem
         snsClient.publish(PublishRequest.builder()
                 .topicArn(topicArn)
                 .message(message)

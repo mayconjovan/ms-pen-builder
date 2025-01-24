@@ -15,9 +15,7 @@ public class FactoryBallSupportCouplerService {
     }
 
 
-    public void createBallSupportCoupler(FactoryBallSupportCouplerDetails ballSupportCoupler){
-        var entity = new FactoryBallSupportCoupler(null, "suporte da esfera", ballSupportCoupler.materialType());
-
-        repository.save(entity);
+    public void createFactoryBallSupportCoupler(FactoryBallSupportCouplerDetails ballSupportCoupler){
+        repository.save(new FactoryBallSupportCoupler(ballSupportCoupler));
     }
 }

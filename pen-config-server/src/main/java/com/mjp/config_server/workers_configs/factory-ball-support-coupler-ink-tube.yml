@@ -1,0 +1,8 @@
+server:
+  name: factory-ball-support-coupler-ink-tube
+  port: 8004
+
+aws:
+  sqs:
+    queue: factory-ball-support-coupler-ink-tube
+
