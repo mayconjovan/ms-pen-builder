@@ -16,8 +16,17 @@ aws:
     endpoint: http://localhost:4566
     topic-name: factory-topic
   sqs:
-    queue-name: factory-ball
-    endpoint: http://localhost:4566
+    queues:
+      ball: factory-ball
+      ball-support: factory-ball-support
+      ball-support-coupler: factory-ball-support-coupler
+      ball-support-coupler-ink-tube: factory-ball-support-coupler-ink-tube
+      external-tube: factory-external-tube
+      ink: factory-ink
+      internal-tube: factory-internal-tube
+      outer-tube-cover: factory-outer-tube-cover
+      tip-cap: factory-tip-cap
+
   region: us-east-1
   accessKey: test
   secretKey: test

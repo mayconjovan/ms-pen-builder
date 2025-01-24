@@ -1,0 +1,7 @@
+server:
+  name: factory-ball-support
+  port: 8002
+
+aws:
+  sqs:
+    queue: factory-ball-support

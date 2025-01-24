@@ -15,9 +15,7 @@ public class FactoryBallSupportService {
     }
 
 
-    public void createBallSupport(FactoryBallSupportDetails ballSupport){
-        var entity = new FactoryBallSupport(null, "suporte da esfera", ballSupport.size(), ballSupport.materialType());
-
-        repository.save(entity);
+    public void createFactoryBallSupport(FactoryBallSupportDetails factoryBallSupport){
+        repository.save(new FactoryBallSupport(factoryBallSupport));
     }
 }

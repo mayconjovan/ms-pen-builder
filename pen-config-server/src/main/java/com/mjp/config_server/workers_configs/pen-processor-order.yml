@@ -1,16 +1,17 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/pen-processor-order
-some-key:
-  property1: Valor do servico
-  property2: XOPTO
+aws:
+  sns:
+    endpoint: http://localhost:4566
+    topic-name: factory-topic
+    credential:
+      accessKey: test
+      secretKey: test
+  region: us-east-1
 
-sns:
-  url: http://localhost:4566
-  credential:
-    access_key_id: fakeAccessKey
-    secret_access_key: fakeSecretKey
 
 server:
   name: Processor Order
   port: 8090
+

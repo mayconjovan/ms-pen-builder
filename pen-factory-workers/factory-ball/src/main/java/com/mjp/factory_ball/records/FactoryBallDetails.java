@@ -1,4 +1,4 @@
 package com.mjp.factory_ball.records;
 
-public record FactoryBallDetails(String materialType, Double size) {
+public record FactoryBallDetails(String description, String material, Double size) {
 }

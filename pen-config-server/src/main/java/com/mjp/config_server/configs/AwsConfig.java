@@ -16,7 +16,7 @@ public class AwsConfig {
     @Bean
     public SqsClient sqsClient() {
         return SqsClient.builder()
-                .endpointOverride(URI.create("http://localhost:4566")) // Endpoint do LocalStack
+                .endpointOverride(URI.create("http://localhost:4566"))
                 .region(Region.US_EAST_1)
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create("test", "test")
@@ -27,7 +27,7 @@ public class AwsConfig {
     @Bean
     public SnsClient snsClient() {
         return SnsClient.builder()
-                .endpointOverride(URI.create("http://localhost:4566")) // Endpoint do LocalStack
+                .endpointOverride(URI.create("http://localhost:4566"))
                 .region(Region.US_EAST_1)
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create("test", "test")

@@ -1,5 +1,6 @@
 package com.mjp.config_server.services;
 
+import com.mjp.config_server.configs.SqsConfig;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,42 +15,56 @@ import java.util.Map;
 
 @Component
 public class AwsResourceInitializer {
+
     private final SqsClient sqsClient;
     private final SnsClient snsClient;
-
-    @Value("${aws.sqs.queue-name}")
-    private String queueName;
+    private final SqsConfig sqsConfig;
 
     @Value("${aws.sns.topic-name}")
     private String topicName;
 
-    public AwsResourceInitializer(SqsClient sqsClient, SnsClient snsClient) {
+    public AwsResourceInitializer(SqsClient sqsClient, SnsClient snsClient, SqsConfig sqsConfig) {
         this.sqsClient = sqsClient;
         this.snsClient = snsClient;
+        this.sqsConfig = sqsConfig;
     }
 
     @PostConstruct
     public void initializeAwsResources() {
-        // Criar tópico SNS
         CreateTopicResponse topicResponse = snsClient.createTopic(CreateTopicRequest.builder()
                 .name(topicName)
                 .build());
         String topicArn = topicResponse.topicArn();
 
-        // Criar fila SQS
-        CreateQueueResponse queueResponse = sqsClient.createQueue(CreateQueueRequest.builder()
-                .queueName(queueName)
-                .build());
-        String queueUrl = queueResponse.queueUrl();
+        sqsConfig.getQueues().values().forEach((queueName -> {
+            try {
+                CreateQueueResponse queueResponse = sqsClient.createQueue(CreateQueueRequest.builder().queueName(queueName).build());
+                String queueUrl = queueResponse.queueUrl();
 
-        // Obter ARN da fila SQS
-        GetQueueAttributesResponse queueAttributes = sqsClient.getQueueAttributes(GetQueueAttributesRequest.builder()
-                .queueUrl(queueUrl)
-                .attributeNames(QueueAttributeName.QUEUE_ARN)
-                .build());
-        String queueArn = queueAttributes.attributes().get(QueueAttributeName.QUEUE_ARN);
+                GetQueueAttributesResponse queueAttributes = sqsClient.getQueueAttributes(GetQueueAttributesRequest.builder()
+                        .queueUrl(queueUrl)
+                        .attributeNames(QueueAttributeName.QUEUE_ARN)
+                        .build());
+                String queueArn = queueAttributes.attributes().get(QueueAttributeName.QUEUE_ARN);
 
-        // Configurar permissões para o tópico SNS publicar na fila SQS
+                Map<QueueAttributeName, String> attributes = getQueueAttributeNameStringMap(queueArn, topicArn);
+                sqsClient.setQueueAttributes(SetQueueAttributesRequest.builder()
+                        .queueUrl(queueUrl)
+                        .attributes(attributes)
+                        .build());
+
+                snsClient.subscribe(SubscribeRequest.builder()
+                        .protocol("sqs")
+                        .endpoint(queueArn)
+                        .topicArn(topicArn)
+                        .build());
+            } catch (Exception e) {
+                throw new RuntimeException("Erro ao configurar a fila '" + queueName + "'", e);
+            }
+        }));
+    }
+
+    private static Map<QueueAttributeName, String> getQueueAttributeNameStringMap(String queueArn, String topicArn) {
         String policy = """
                     {
                         "Version": "2012-10-17",
@@ -69,20 +84,7 @@ public class AwsResourceInitializer {
                     }
                 """.formatted(queueArn, topicArn);
 
-        Map<QueueAttributeName, String> attributes = Map.of(
-                QueueAttributeName.POLICY, policy
-        );
+        return Map.of(QueueAttributeName.POLICY, policy);
 
-        sqsClient.setQueueAttributes(SetQueueAttributesRequest.builder()
-                .queueUrl(queueUrl)
-                .attributes(attributes)
-                .build());
-
-        // Associar o tópico SNS à fila SQS
-        snsClient.subscribe(SubscribeRequest.builder()
-                .protocol("sqs")
-                .endpoint(queueArn)
-                .topicArn(topicArn)
-                .build());
     }
 }

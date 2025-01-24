@@ -15,9 +15,7 @@ public class FactoryBallService {
     }
 
 
-    public void createFactoryBall(FactoryBallDetails factoryBall){
-        var entity = new FactoryBall(null, "esfera", factoryBall.size(), factoryBall.materialType());
-
-        repository.save(entity);
+    public void createFactoryBall(FactoryBallDetails factoryBallDetails){
+        repository.save(new FactoryBall(factoryBallDetails));
     }
 }

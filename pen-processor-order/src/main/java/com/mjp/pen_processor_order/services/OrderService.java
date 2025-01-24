@@ -1,10 +1,11 @@
 package com.mjp.pen_processor_order.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjp.pen_processor_order.dto.OrderProcessDTO;
 import com.mjp.pen_processor_order.dto.PenDTO;
 import com.mjp.pen_processor_order.entities.OrderProcess;
 import com.mjp.pen_processor_order.entities.Pen;
-import com.mjp.pen_processor_order.producer.SnsProducer;
+import com.mjp.pen_processor_order.producer.SnsPublisher;
 import com.mjp.pen_processor_order.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,10 @@ import java.time.Instant;
 public class OrderService {
 
     private final OrderRepository repository;
-    private final SnsProducer snsProducer;
+    private final SnsPublisher snsProducer;
 
 
-    public OrderService(OrderRepository repository, SnsProducer snsProducer) {
+    public OrderService(OrderRepository repository, SnsPublisher snsProducer) {
         this.repository = repository;
         this.snsProducer = snsProducer;
     }
@@ -28,7 +29,12 @@ public class OrderService {
         penx.setPenDTO(pen);
         var process = new OrderProcess(null, Instant.now(), penx, pen.quantity());
         try{
-            snsProducer.publishToTopic("topic", pen.toString());
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            String jsonMessage = objectMapper.writeValueAsString(pen);
+
+
+            snsProducer.publishMessage(jsonMessage);
         } catch(Exception e) {
             e.printStackTrace();
         }

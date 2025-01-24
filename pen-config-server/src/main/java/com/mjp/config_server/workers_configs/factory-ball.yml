@@ -1,7 +1,7 @@
-aws:
-  sqs:
-    queue: factory-ball
-
 server:
   name: factory-ball
   port: 8001
+
+aws:
+  sqs:
+    queue: factory-ball

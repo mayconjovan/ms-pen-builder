@@ -6,27 +6,26 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.sns.SnsAsyncClient;
-
+import software.amazon.awssdk.services.sns.SnsClient;
 
 import java.net.URI;
 
 @Configuration
 public class SnsConfig {
 
-    @Value("${sns.url}")
+    @Value("${aws.sns.endpoint}")
     private String url;
-    @Value("${sns.credential.access_key_id}")
+    @Value("${aws.sns.credential.accessKey}")
     private String accessKey;
-    @Value("${sns.credential.secret_access_key}")
+    @Value("${aws.sns.credential.secretKey}")
     private String secretKey;
 
 
     @Bean
-    public SnsAsyncClient snsAsyncClient() {
-        return SnsAsyncClient.builder()
+    public SnsClient snsClient() {
+        return SnsClient.builder()
                 .endpointOverride(URI.create(url))
-                .region(Region.SA_EAST_1)
+                .region(Region.US_EAST_1)
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)
                 ))

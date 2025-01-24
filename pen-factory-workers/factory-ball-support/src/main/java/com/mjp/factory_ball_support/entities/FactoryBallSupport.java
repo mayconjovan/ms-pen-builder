@@ -1,5 +1,6 @@
 package com.mjp.factory_ball_support.entities;
 
+import com.mjp.factory_ball_support.records.FactoryBallSupportDetails;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -16,6 +17,11 @@ public class FactoryBallSupport {
     private String materialType;
 
     public FactoryBallSupport() {
+    }
+    public FactoryBallSupport(FactoryBallSupportDetails details){
+        this.description = details.description();
+        this.size = details.size();
+        this.materialType = details.materialType();
     }
 
     public FactoryBallSupport(UUID id, String description, Double size, String materialType) {
