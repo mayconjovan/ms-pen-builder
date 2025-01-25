@@ -1,6 +1,7 @@
 package com.mjp.pen_processor_order.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjp.pen_processor_order.dto.OrderProcessDTO;
 import com.mjp.pen_processor_order.dto.PensDetails;
@@ -48,7 +49,7 @@ public class OrderService {
                                     .orderProcess(processOrder)
                                     .build();
                         } catch (JsonProcessingException e) {
-                            throw new RuntimeException(e); //tratar exception
+                            throw new RuntimeException("Erro: JSON precisa ser revisado", e); //tratar exception
                         }
                     }).toList();
 
@@ -59,43 +60,51 @@ public class OrderService {
             return OrderProcessDTO.fromEntity(process, orderRequest.pensDetails());
 
         } catch (Exception e) {
-            e.printStackTrace(); // Precisa ser customizada
+            throw new RuntimeException("Erro ao processar o JSON da caneta", e); // Precisa ser customizada
         }
-        return null;
     }
 
 
-
-    public void startProductionProcess() throws JsonProcessingException {
+    public void startProductionProcess() {
         List<OrderProcess> paidOrders = repository.findAllOrderProcessByPaymentStatusType(PaymentStatusType.WAITING_PAYMENT);
-
-        paidOrders.forEach(System.out::println);
-
-        //return notifyProduction(paidOrders);
-
+        List<OrderProcessDTO> orderProcessDTOs = convertEntityToDto(paidOrders);
+        notifyProduction(orderProcessDTOs);
     }
 
-//    private void notifyProduction(List<OrderProcess> paidOrders) throws JsonProcessingException {
-//        paidOrders.stream().map(process -> {
-//            List<PensDetails> penDTOs = process.getPens().stream()
-//                    .map(pen -> new PensDetails(pen.getId(), pen.getPenDetails()))  // Ajuste os parâmetros de acordo com a estrutura do PenDTO
-//                    .collect(Collectors.toList());
-//
-//
-//
-//                }
-//
-//        );
-//
-//        OrderProcessDTO orderProcessDTO = new OrderProcessDTO(processSaved.getOrderNumber(),
-//                process.getOrderCreatedAt(), process.getTotalValue(),
-//                process.getQuantity(), penDTO);
-//
-//        String jsonMessage = objectMapper.writeValueAsString(orderProcessDTO);
-//
-//        snsProducer.publishMessage(jsonMessage);
-        //return orderProcessDTO;
-//    }
+    private List<OrderProcessDTO> convertEntityToDto(List<OrderProcess> paidOrders) {
+        return paidOrders.stream()
+                .map(orderProcess -> {
+                    List<PensDetails> penDetailsList = orderProcess.getPens().stream()
+                            .map(pen -> {
+                                try {
+                                    return objectMapper.readValue(pen.getPenDetails(), PensDetails.class);
+                                } catch (JsonProcessingException e) {
+                                    throw new RuntimeException("Erro ao processar o JSON da caneta", e);
+                                }
+                            })
+                            .toList();
+                    return new OrderProcessDTO(
+                            orderProcess.getOrderNumber(),
+                            orderProcess.getOrderCreatedAt(),
+                            orderProcess.getTotalValue(),
+                            orderProcess.getPaymentType(),
+                            penDetailsList
+                    );
+                })
+                .toList();
+    }
+
+    private void notifyProduction(List<OrderProcessDTO> paidOrders) {
+        paidOrders.forEach(x -> {
+            String jsonMessage = null;
+            try {
+                jsonMessage = objectMapper.writeValueAsString(x);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            snsProducer.publishMessage(jsonMessage);
+        });
+    }
 
 
 //    public List<OrderProcessDTO> listAllOrders() {
