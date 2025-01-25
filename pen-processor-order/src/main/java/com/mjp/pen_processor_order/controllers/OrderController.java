@@ -1,6 +1,5 @@
 package com.mjp.pen_processor_order.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mjp.pen_processor_order.dto.OrderProcessDTO;
 import com.mjp.pen_processor_order.dto.ProductionOrderRequest;
 import com.mjp.pen_processor_order.services.OrderService;
@@ -21,16 +20,20 @@ public class OrderController {
     }
 
 
+    @GetMapping
+    public ResponseEntity<List<OrderProcessDTO>> listAllOrdersPaged() {
+        return ResponseEntity.ok().body(service.listAllOrdersPaged());
+    }
+
     @PostMapping
-    public ResponseEntity<OrderProcessDTO> createProductionOrder(@RequestBody ProductionOrderRequest orderRequest){
+    public ResponseEntity<OrderProcessDTO> createProductionOrder(@RequestBody ProductionOrderRequest orderRequest) {
         OrderProcessDTO orderProcess = service.createProductionOrder(orderRequest);
         return ResponseEntity.ok().body(orderProcess);
     }
 
-    @GetMapping
-    public ResponseEntity<OrderProcessDTO> listAll() throws JsonProcessingException {
-        service.startProductionProcess();
-
-        return ResponseEntity.noContent().build();
+    @PostMapping("/start-production")
+    public ResponseEntity<List<Integer>> startProductionProcess() {
+        List<Integer> orderNumber = service.startProductionProcess();
+        return ResponseEntity.ok(orderNumber);
     }
 }

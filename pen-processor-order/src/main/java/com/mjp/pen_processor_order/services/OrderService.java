@@ -1,7 +1,6 @@
 package com.mjp.pen_processor_order.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjp.pen_processor_order.dto.OrderProcessDTO;
 import com.mjp.pen_processor_order.dto.PensDetails;
@@ -11,7 +10,6 @@ import com.mjp.pen_processor_order.entities.Pen;
 import com.mjp.pen_processor_order.producer.SnsPublisher;
 import com.mjp.pen_processor_order.repositories.OrderRepository;
 import com.mjp.pen_processor_order.types.PaymentStatusType;
-import com.mjp.pen_processor_order.types.PaymentType;
 import com.mjp.pen_processor_order.util.EntityManagerHelper;
 import org.springframework.stereotype.Service;
 
@@ -65,10 +63,11 @@ public class OrderService {
     }
 
 
-    public void startProductionProcess() {
+    public List<Integer> startProductionProcess() {
         List<OrderProcess> paidOrders = repository.findAllOrderProcessByPaymentStatusType(PaymentStatusType.WAITING_PAYMENT);
         List<OrderProcessDTO> orderProcessDTOs = convertEntityToDto(paidOrders);
         notifyProduction(orderProcessDTOs);
+        return orderProcessDTOs.stream().map(OrderProcessDTO::orderNumber).toList();
     }
 
     private List<OrderProcessDTO> convertEntityToDto(List<OrderProcess> paidOrders) {
@@ -96,7 +95,7 @@ public class OrderService {
 
     private void notifyProduction(List<OrderProcessDTO> paidOrders) {
         paidOrders.forEach(x -> {
-            String jsonMessage = null;
+            String jsonMessage;
             try {
                 jsonMessage = objectMapper.writeValueAsString(x);
             } catch (JsonProcessingException e) {
@@ -106,16 +105,7 @@ public class OrderService {
         });
     }
 
-
-//    public List<OrderProcessDTO> listAllOrders() {
-//
-//        List<OrderProcessDTO> dtos = new ArrayList<>();
-//        List<OrderProcess> all = repository.findAll();
-//        //Aqui deve ler no outro banco de dados dos workers
-//
-//        //all.forEach(OrderProcessDTO::new);
-//
-//        return null;
-//
-//    }
+    public List<OrderProcessDTO> listAllOrdersPaged() {
+       return convertEntityToDto(repository.findAll());
+    }
 }
