@@ -1,11 +1,19 @@
 package com.mjp.pen_processor_order.entities;
 
-import com.mjp.pen_processor_order.util.EntityManagerHelper;
+import com.mjp.pen_processor_order.types.PaymentStatusType;
+import com.mjp.pen_processor_order.types.PaymentType;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_order_process")
 public class OrderProcess {
@@ -24,63 +32,18 @@ public class OrderProcess {
     )
     private Integer orderNumber;
     private Double totalValue;
-    private Integer quantity;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderProcess", cascade = CascadeType.ALL)
+    private List<Pen> pens;
+
+    private PaymentType paymentType;
+    private PaymentStatusType paymentStatusType;
 
     @PrePersist
     private void prePersist() {
         if (orderCreatedAt == null) {
             orderCreatedAt = Instant.now();
         }
-    }
-
-
-    public OrderProcess() {
-    }
-
-    public OrderProcess(UUID id, Instant orderCreated, Integer orderNumber, Integer quantity) {
-        this.id = id;
-        this.orderCreatedAt = orderCreated;
-        this.orderNumber = orderNumber;
-        this.quantity = quantity;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Instant getOrderCreatedAt() {
-        return orderCreatedAt;
-    }
-
-    public void setOrderCreatedAt(Instant orderCreatedAt) {
-        this.orderCreatedAt = orderCreatedAt;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Integer getOrderNumber() {
-        return orderNumber;
-    }
-
-    public void setOrderNumber(Integer orderNumber) {
-        this.orderNumber = orderNumber;
-    }
-
-    public Double getTotalValue() {
-        return totalValue;
-    }
-
-    public void setTotalValue(Double totalValue) {
-        this.totalValue = totalValue;
+        this.paymentStatusType = PaymentStatusType.WAITING_PAYMENT;
     }
 }

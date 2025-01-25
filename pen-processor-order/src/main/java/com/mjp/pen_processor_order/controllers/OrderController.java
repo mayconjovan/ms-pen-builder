@@ -1,7 +1,7 @@
 package com.mjp.pen_processor_order.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mjp.pen_processor_order.dto.OrderProcessDTO;
-import com.mjp.pen_processor_order.dto.PenDTO;
 import com.mjp.pen_processor_order.dto.ProductionOrderRequest;
 import com.mjp.pen_processor_order.services.OrderService;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +27,10 @@ public class OrderController {
         return ResponseEntity.ok().body(orderProcess);
     }
 
-//    @GetMapping
-//    public ResponseEntity<OrderProcessDTO> listAll() {
-//        List<OrderProcessDTO> list = service.listAllOrders();
-//    }
+    @GetMapping
+    public ResponseEntity<OrderProcessDTO> listAll() throws JsonProcessingException {
+        service.startProductionProcess();
+
+        return ResponseEntity.noContent().build();
+    }
 }
