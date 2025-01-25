@@ -1,5 +1,6 @@
 package com.mjp.pen_processor_order.entities;
 
+import com.mjp.pen_processor_order.util.EntityManagerHelper;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -14,10 +15,24 @@ public class OrderProcess {
     private UUID id;
     private Instant orderCreatedAt;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
+    @SequenceGenerator(
+            name = "order_number_gen",
+            sequenceName = "order_number_seq",
+            allocationSize = 1,
+            initialValue = 1
+    )
     private Integer orderNumber;
     private Double totalValue;
     private Integer quantity;
+
+    @PrePersist
+    private void prePersist() {
+        if (orderCreatedAt == null) {
+            orderCreatedAt = Instant.now();
+        }
+    }
+
 
     public OrderProcess() {
     }

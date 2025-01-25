@@ -2,6 +2,7 @@ package com.mjp.pen_processor_order.controllers;
 
 import com.mjp.pen_processor_order.dto.OrderProcessDTO;
 import com.mjp.pen_processor_order.dto.PenDTO;
+import com.mjp.pen_processor_order.dto.ProductionOrderRequest;
 import com.mjp.pen_processor_order.services.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<OrderProcessDTO> createProductionOrder(@RequestBody PenDTO penDto, @RequestBody Integer quantity){
-        OrderProcessDTO orderProcess = service.createProductionOrder(penDto, quantity);
+    public ResponseEntity<OrderProcessDTO> createProductionOrder(@RequestBody ProductionOrderRequest orderRequest){
+        OrderProcessDTO orderProcess = service.createProductionOrder(orderRequest);
         return ResponseEntity.ok().body(orderProcess);
     }
 

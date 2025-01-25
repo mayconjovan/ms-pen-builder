@@ -47,8 +47,8 @@ public class AwsResourceInitializer {
     public void initializeAwsResources() {
         String topicArn = initializeSnsTopic();
         initializeSqsQueues(topicArn);
-        initializeS3Bucket();
-        initializeSecretsManager();
+//        initializeS3Bucket();
+//        initializeSecretsManager();
 //        initializeApiGateway();
 
 
