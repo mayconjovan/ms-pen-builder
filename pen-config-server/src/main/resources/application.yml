@@ -17,6 +17,7 @@ aws:
     topic-name: factory-topic
   sqs:
     queues:
+      payment-processor: payment-processor
       ball: factory-ball
       ball-support: factory-ball-support
       ball-support-coupler-ink-tube: factory-ball-support-coupler-ink-tube

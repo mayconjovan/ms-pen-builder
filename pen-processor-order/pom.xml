@@ -60,6 +60,12 @@
             <version>2.20.88</version>
         </dependency>
         <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>sqs</artifactId>
+            <version>2.21.46</version>  <!-- Verifique a versão mais recente -->
+        </dependency>
+
+        <dependency>
             <groupId>cloud.localstack</groupId>
             <artifactId>localstack-utils</artifactId>
             <version>0.2.23</version>

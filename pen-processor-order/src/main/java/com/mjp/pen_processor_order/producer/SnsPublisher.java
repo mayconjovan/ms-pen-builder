@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.ListTopicsResponse;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
+import software.amazon.awssdk.services.sns.model.PublishResponse;
 
 @Component
 public class SnsPublisher {
@@ -27,9 +28,11 @@ public class SnsPublisher {
                 .orElseThrow(() -> new RuntimeException("Tópico não encontrado"))
                 .topicArn();
 
-        snsClient.publish(PublishRequest.builder()
+        PublishResponse published = snsClient.publish(PublishRequest.builder()
                 .topicArn(topicArn)
                 .message(message)
                 .build());
+
+        System.out.println("SNS Message sent! Message ID: " + published.messageId());
     }
 }

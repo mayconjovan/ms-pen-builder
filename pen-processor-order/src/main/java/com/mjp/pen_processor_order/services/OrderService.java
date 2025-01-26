@@ -9,6 +9,7 @@ import com.mjp.pen_processor_order.entities.OrderProcess;
 import com.mjp.pen_processor_order.entities.PaymentDetails;
 import com.mjp.pen_processor_order.entities.Pen;
 import com.mjp.pen_processor_order.producer.SnsPublisher;
+import com.mjp.pen_processor_order.producer.SqsPublisher;
 import com.mjp.pen_processor_order.repositories.OrderRepository;
 import com.mjp.pen_processor_order.types.PaymentStatusType;
 import com.mjp.pen_processor_order.util.EntityManagerHelper;
@@ -29,13 +30,15 @@ public class OrderService {
     private final SnsPublisher snsProducer;
     private final EntityManagerHelper entityManger;
     private final ObjectMapper objectMapper;
+    private final SqsPublisher sqsPublisher;
 
 
-    public OrderService(OrderRepository repository, SnsPublisher snsProducer, EntityManagerHelper entityManger, ObjectMapper objectMapper) {
+    public OrderService(OrderRepository repository, SnsPublisher snsProducer, EntityManagerHelper entityManger, ObjectMapper objectMapper, SqsPublisher sqsPublisher) {
         this.repository = repository;
         this.snsProducer = snsProducer;
         this.entityManger = entityManger;
         this.objectMapper = objectMapper;
+        this.sqsPublisher = sqsPublisher;
     }
 
     public OrderProcessDTO createOrder(ProductionOrderRequest orderRequest) {
@@ -62,11 +65,23 @@ public class OrderService {
 
             var process = repository.save(processOrder);
 
+            processPayment(processOrder.getPaymentDetails());
+
             return OrderProcessDTO.fromEntity(process, orderRequest.pensDetails());
 
         } catch (Exception e) {
             throw new RuntimeException("Erro ao processar o JSON da caneta", e); // Precisa ser customizada
         }
+    }
+
+    private void processPayment(PaymentDetails paymentDetails) {
+            String jsonMessage;
+            try {
+                jsonMessage = objectMapper.writeValueAsString(paymentDetails);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            sqsPublisher.sendMessage(jsonMessage);
     }
 
 
