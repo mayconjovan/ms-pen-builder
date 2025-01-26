@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: factory-ball-support-coupler
-  cloud:
-    config:
-      uri: http://localhost:8888

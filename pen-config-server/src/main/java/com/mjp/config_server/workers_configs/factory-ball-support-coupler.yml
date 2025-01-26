@@ -1,8 +1,0 @@
-server:
-  name: factory-ball-support-coupler
-  port: 8003
-
-aws:
-  sqs:
-    queue: factory-ball-support-coupler
-

@@ -16,7 +16,7 @@ public class OrderProductionJob {
 
     @Scheduled(cron = "0 0/5 * * * *")
     public void getAllOrderPaid() {
-       // service.getAllOrdersPaid();
+        service.startProductionProcess();
     }
 
 }

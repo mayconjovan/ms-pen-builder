@@ -1,7 +1,6 @@
 package com.mjp.pen_processor_order.entities;
 
-import com.mjp.pen_processor_order.types.PaymentStatusType;
-import com.mjp.pen_processor_order.types.PaymentType;
+import com.mjp.pen_processor_order.types.OrderStatusType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,14 +35,17 @@ public class OrderProcess {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderProcess", cascade = CascadeType.ALL)
     private List<Pen> pens;
 
-    private PaymentType paymentType;
-    private PaymentStatusType paymentStatusType;
+    @OneToOne(mappedBy = "orderProcess", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private PaymentDetails paymentDetails;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatusType orderStatus;
 
     @PrePersist
     private void prePersist() {
         if (orderCreatedAt == null) {
             orderCreatedAt = Instant.now();
         }
-        this.paymentStatusType = PaymentStatusType.WAITING_PAYMENT;
+        this.orderStatus = OrderStatusType.WAITING_PAYMENT;
     }
 }

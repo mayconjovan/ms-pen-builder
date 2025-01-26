@@ -19,7 +19,6 @@ aws:
     queues:
       ball: factory-ball
       ball-support: factory-ball-support
-      ball-support-coupler: factory-ball-support-coupler
       ball-support-coupler-ink-tube: factory-ball-support-coupler-ink-tube
       external-tube: factory-external-tube
       ink: factory-ink
