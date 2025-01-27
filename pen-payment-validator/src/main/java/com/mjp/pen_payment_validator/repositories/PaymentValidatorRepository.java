@@ -9,5 +9,5 @@ import java.util.UUID;
 @Repository
 public interface PaymentValidatorRepository extends JpaRepository<PaymentDetails, UUID> {
 
-    PaymentDetails findByOrderNumber(Long orderNumber);
+    PaymentDetails findByOrderNumber(Integer orderNumber);
 }

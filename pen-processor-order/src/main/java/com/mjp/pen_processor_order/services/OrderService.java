@@ -65,7 +65,7 @@ public class OrderService {
 
             var process = repository.save(processOrder);
 
-            processPayment(processOrder.getPaymentDetails());
+            processPayment(processOrder.getOrderNumber());
 
             return OrderProcessDTO.fromEntity(process, orderRequest.pensDetails());
 
@@ -74,18 +74,13 @@ public class OrderService {
         }
     }
 
-    private void processPayment(PaymentDetails paymentDetails) {
-            String jsonMessage;
-            try {
-                jsonMessage = objectMapper.writeValueAsString(paymentDetails);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-            sqsPublisher.sendMessage(jsonMessage);
+    private void processPayment(Integer orderNumber) {
+            sqsPublisher.sendMessage(String.valueOf(orderNumber));
     }
 
 
     public List<Integer> startProductionProcess() {
+        System.out.println("Start production process");
         List<OrderProcess> paidOrders = repository.findAllByPaymentDetails_PaymentStatusType(PaymentStatusType.APPROVED_PAYMENT);
         List<OrderProcessDTO> orderProcessDTOs = convertEntityToDto(paidOrders, Function.identity());
         notifyProduction(orderProcessDTOs);

@@ -39,8 +39,6 @@ public class AwsResourceInitializer {
     @PostConstruct
     public void initializeAwsResources() {
         configureSqsAndSns();
-        //String topicArn = initializeSnsTopic();
-        //initializeSqsQueues(topicArn);
 //        initializeS3Bucket();
 //        initializeSecretsManager();
 //        initializeApiGateway();
@@ -77,7 +75,7 @@ public class AwsResourceInitializer {
                         "factory-outer-tube-cover",
                         "factory-tip-cap"),
                 createTopic("notify-payment"), List.of(
-                        "payment-validator")
+                        "payment-notification")
         );
 
         initializeSqsQueues(topicToQueuesMap);
@@ -124,52 +122,6 @@ public class AwsResourceInitializer {
             throw new RuntimeException("Erro ao criar o tópico SNS: " + topicName, e);
         }
     }
-
-
-//    private void initializeSqsQueues(String topicArn) {
-//        sqsConfig.getQueues().values().forEach((queueName -> {
-//            try {
-//                CreateQueueResponse queueResponse = sqsClient.createQueue(CreateQueueRequest.builder().queueName(queueName).build());
-//                String queueUrl = queueResponse.queueUrl();
-//
-//                GetQueueAttributesResponse queueAttributes = sqsClient.getQueueAttributes(GetQueueAttributesRequest.builder()
-//                        .queueUrl(queueUrl)
-//                        .attributeNames(QueueAttributeName.QUEUE_ARN)
-//                        .build());
-//                String queueArn = queueAttributes.attributes().get(QueueAttributeName.QUEUE_ARN);
-//
-//                Map<QueueAttributeName, String> attributes = getQueueAttributeNameStringMap(queueArn, topicArn);
-//                sqsClient.setQueueAttributes(SetQueueAttributesRequest.builder()
-//                        .queueUrl(queueUrl)
-//                        .attributes(attributes)
-//                        .build());
-//
-//                snsClient.subscribe(SubscribeRequest.builder()
-//                        .protocol("sqs")
-//                        .endpoint(queueArn)
-//                        .topicArn(topicArn)
-//                        .build());
-//            } catch (Exception e) {
-//                throw new RuntimeException("Erro ao configurar a fila '" + queueName + "'", e);
-//            }
-//        }));
-//    }
-
-//    private String initializeSnsTopic() {
-//        CreateTopicResponse topicResponse = snsClient.createTopic(CreateTopicRequest.builder()
-//                .name(topicName)
-//                .build());
-//        return topicResponse.topicArn();
-//    }
-//
-//    private String initializePaymentNotification() {
-//        CreateTopicResponse topicResponse = snsClient.createTopic(CreateTopicRequest.builder()
-//                .name(topicName)
-//                .build());
-//        return topicResponse.topicArn();
-//    }
-
-
 
     private static Map<QueueAttributeName, String> getQueueAttributeNameStringMap(String queueArn, String topicArn) {
         String policy = """

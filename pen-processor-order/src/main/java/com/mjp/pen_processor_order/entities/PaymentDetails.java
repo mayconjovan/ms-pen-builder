@@ -1,5 +1,6 @@
 package com.mjp.pen_processor_order.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mjp.pen_processor_order.dto.PaymentDetailsInput;
 import com.mjp.pen_processor_order.types.PaymentStatusType;
 import com.mjp.pen_processor_order.types.PaymentType;
@@ -23,6 +24,7 @@ public class PaymentDetails {
     private UUID id;
 
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "order_number", referencedColumnName = "orderNumber")
     private OrderProcess orderProcess;

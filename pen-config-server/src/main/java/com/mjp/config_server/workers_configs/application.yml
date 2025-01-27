@@ -15,3 +15,11 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
+aws:
+  sns:
+    endpoint: http://localhost:4566
+    region: us-east-1
+    credential:
+      accessKey: test
+      secretKey: test

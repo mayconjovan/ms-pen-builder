@@ -31,7 +31,7 @@ public class PaymentValidatorService {
         this.snsPublisher = snsPublisher;
     }
 
-    public void validatePayment(Long orderNumber) {
+    public void validatePayment(Integer orderNumber) {
         PaymentDetails paymentDetails = repository.findByOrderNumber(orderNumber);
 
         try {
@@ -43,7 +43,7 @@ public class PaymentValidatorService {
         }
     }
 
-    private void notifyPaymentStatus(Long orderNumber){
+    private void notifyPaymentStatus(Integer orderNumber){
         snsPublisher.publishMessage(orderNumber);
     }
 

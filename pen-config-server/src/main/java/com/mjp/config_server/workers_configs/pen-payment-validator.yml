@@ -9,4 +9,7 @@ spring:
 aws:
   sqs:
     queue: payment-validator
+  sns:
+    topic: notify-payment
+
 

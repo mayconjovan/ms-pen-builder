@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.sns.model.PublishResponse;
 public class SnsPublisher {
     private final SnsClient snsClient;
 
-    @Value("${aws.sns.topic-payment}")
+    @Value("${aws.sns.topic}")
     private String topicName;
 
     public SnsPublisher(SnsClient snsClient) {
@@ -19,7 +19,7 @@ public class SnsPublisher {
     }
 
 
-    public void publishMessage(Long orderNumber) {
+    public void publishMessage(Integer orderNumber) {
         ListTopicsResponse topicsResponse = snsClient.listTopics();
         String topicArn = topicsResponse.topics().stream()
                 .filter(topic -> topic.topicArn().endsWith(":" + topicName))
