@@ -3,9 +3,9 @@ spring:
     config:
       server:
         native:
-          search-locations: file:src/main/java/com/mjp/config_server/workers_configs/ # Diretório local onde estão os arquivos de configuração
+          search-locations: file:src/main/java/com/mjp/config_server/workers_configs/
   profiles:
-    active: native # Ativa o modo nativo para leitura de arquivos locais
+    active: native
 
 server:
   port: 8888
@@ -13,19 +13,18 @@ server:
 
 aws:
   sns:
-    endpoint: http://localhost:4566
-    topic-name: factory-topic
-  sqs:
-    queues:
-      payment-processor: payment-processor
-      ball: factory-ball
-      ball-support: factory-ball-support
-      ball-support-coupler-ink-tube: factory-ball-support-coupler-ink-tube
-      external-tube: factory-external-tube
-      ink: factory-ink
-      internal-tube: factory-internal-tube
-      outer-tube-cover: factory-outer-tube-cover
-      tip-cap: factory-tip-cap
+    topics:
+      factory-topic:
+        - factory-ball
+        - factory-ball-support
+        - factory-ball-support-coupler-ink-tube
+        - factory-external-tube
+        - factory-ink
+        - factory-internal-tube
+        - factory-outer-tube-cover
+        - factory-tip-cap
+      notify-payment-topic:
+        - notify-payment
   endpoint: http://localhost:4566
   region: us-east-1
   accessKey: test

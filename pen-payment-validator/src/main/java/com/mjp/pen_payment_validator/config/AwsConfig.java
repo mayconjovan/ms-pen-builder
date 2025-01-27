@@ -1,4 +1,4 @@
-package com.mjp.factory_ball.config;
+package com.mjp.pen_payment_validator.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -6,12 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 import java.net.URI;
 
 @Configuration
-public class SqsConfig {
+public class AwsConfig {
 
     @Value("${aws.sns.endpoint}")
     private String url;
@@ -21,7 +22,7 @@ public class SqsConfig {
     private String secretKey;
 
     @Bean
-    public SqsAsyncClient sqsAsyncClient() {
+    public SqsAsyncClient sqsAsyncClient(){
         return SqsAsyncClient.builder()
                 .endpointOverride(URI.create(url))
                 .region(Region.US_EAST_1)
@@ -30,4 +31,17 @@ public class SqsConfig {
                 ))
                 .build();
     }
+
+    @Bean
+    public SnsClient snsClient() {
+        return SnsClient.builder()
+                .endpointOverride(URI.create(url))
+                .region(Region.US_EAST_1)
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(accessKey, secretKey)
+                ))
+                .build();
+    }
+
+
 }
