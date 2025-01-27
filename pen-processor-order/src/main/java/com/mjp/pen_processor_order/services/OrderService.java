@@ -11,6 +11,7 @@ import com.mjp.pen_processor_order.entities.Pen;
 import com.mjp.pen_processor_order.producer.SnsPublisher;
 import com.mjp.pen_processor_order.producer.SqsPublisher;
 import com.mjp.pen_processor_order.repositories.OrderRepository;
+import com.mjp.pen_processor_order.types.OrderStatusType;
 import com.mjp.pen_processor_order.types.PaymentStatusType;
 import com.mjp.pen_processor_order.util.EntityManagerHelper;
 import org.springframework.data.domain.Page;
@@ -81,12 +82,25 @@ public class OrderService {
 
     public List<Integer> startProductionProcess() {
         System.out.println("Start production process");
-        List<OrderProcess> paidOrders = repository.findAllByPaymentDetails_PaymentStatusType(PaymentStatusType.APPROVED_PAYMENT);
-        List<OrderProcessDTO> orderProcessDTOs = convertEntityToDto(paidOrders, Function.identity());
+        List<OrderProcess> orders = findOrdersToStartProduction();
+        List<OrderProcessDTO> orderProcessDTOs = convertEntityToDto(orders, Function.identity());
         notifyProduction(orderProcessDTOs);
+        updateOrderStatus(orders);
         return orderProcessDTOs.stream().map(OrderProcessDTO::orderNumber).toList();
     }
 
+    private List<OrderProcess> findOrdersToStartProduction() {
+        return repository.findAllByOrderStatusAndPaymentDetails_PaymentStatusType(OrderStatusType.PENDING,
+                PaymentStatusType.APPROVED_PAYMENT);
+    }
+
+    private void updateOrderStatus(List<OrderProcess> orders) {
+        orders.forEach(order -> order.setOrderStatus(OrderStatusType.STARTED_PRODUCTION));
+        repository.saveAll(orders);
+    }
+
+
+    //Atualizar isso para receber um filtro com varios parametros (Criteria? By Example talvez)
     public Page<OrderProcessDTO> findAllOrdersPaged(Pageable pageable, String paymentStatus) {
         Page<OrderProcess> orders;
 

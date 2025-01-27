@@ -1,6 +1,7 @@
 package com.mjp.pen_processor_order.repositories;
 
 import com.mjp.pen_processor_order.entities.OrderProcess;
+import com.mjp.pen_processor_order.types.OrderStatusType;
 import com.mjp.pen_processor_order.types.PaymentStatusType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Repository
 public interface OrderRepository extends JpaRepository<OrderProcess, UUID> {
 
-    List<OrderProcess> findAllByPaymentDetails_PaymentStatusType(PaymentStatusType paymentStatusType);
+    List<OrderProcess> findAllByOrderStatusAndPaymentDetails_PaymentStatusType(OrderStatusType status, PaymentStatusType paymentStatusType);
 
     Page<OrderProcess> findAllByPaymentDetails_PaymentStatusType(PaymentStatusType paymentStatusType, Pageable pageable);
 }

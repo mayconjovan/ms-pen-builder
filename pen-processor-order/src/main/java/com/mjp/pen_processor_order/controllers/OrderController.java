@@ -3,7 +3,6 @@ package com.mjp.pen_processor_order.controllers;
 import com.mjp.pen_processor_order.dto.OrderProcessDTO;
 import com.mjp.pen_processor_order.dto.ProductionOrderRequest;
 import com.mjp.pen_processor_order.services.OrderService;
-import com.mjp.pen_processor_order.types.PaymentStatusType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

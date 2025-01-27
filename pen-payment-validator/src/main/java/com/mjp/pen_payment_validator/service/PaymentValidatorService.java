@@ -7,6 +7,7 @@ import com.mjp.pen_payment_validator.service.strategy.CreditCardStrategy;
 import com.mjp.pen_payment_validator.service.strategy.DebitCardStrategy;
 import com.mjp.pen_payment_validator.service.strategy.PixStrategy;
 import com.mjp.pen_payment_validator.service.strategy.TicketStrategy;
+import com.mjp.pen_payment_validator.types.PaymentStatusType;
 import com.mjp.pen_payment_validator.types.PaymentType;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class PaymentValidatorService {
     }
 
     public void validatePayment(Integer orderNumber) {
-        PaymentDetails paymentDetails = repository.findByOrderNumber(orderNumber);
+        PaymentDetails paymentDetails = repository.findByOrderNumberAndPaymentStatusType(orderNumber, PaymentStatusType.WAITING_PAYMENT);
 
         try {
             var paymentDetailsUpdated = mapStrategy.get(paymentDetails.getPaymentType()).processPayment(paymentDetails);

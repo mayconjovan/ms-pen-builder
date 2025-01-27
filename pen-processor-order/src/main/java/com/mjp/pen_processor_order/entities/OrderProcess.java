@@ -46,6 +46,6 @@ public class OrderProcess {
         if (orderCreatedAt == null) {
             orderCreatedAt = Instant.now();
         }
-        this.orderStatus = OrderStatusType.WAITING_PAYMENT;
+        this.orderStatus = OrderStatusType.PENDING;
     }
 }

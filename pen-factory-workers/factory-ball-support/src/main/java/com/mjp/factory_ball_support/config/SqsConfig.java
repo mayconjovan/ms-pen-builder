@@ -1,7 +1,10 @@
 package com.mjp.factory_ball_support.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
@@ -10,11 +13,22 @@ import java.net.URI;
 @Configuration
 public class SqsConfig {
 
+    @Value("${aws.basic-config.endpoint}")
+    private String url;
+    @Value("${aws.basic-config.credential.accessKey}")
+    private String accessKey;
+    @Value("${aws.basic-config.credential.secretKey}")
+    private String secretKey;
+
+
     @Bean
     public SqsAsyncClient sqsAsyncClient(){
         return SqsAsyncClient.builder()
-                .endpointOverride(URI.create("http://localhost:4566"))
+                .endpointOverride(URI.create(url))
                 .region(Region.SA_EAST_1)
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(accessKey, secretKey)
+                ))
                 .build();
     }
 }

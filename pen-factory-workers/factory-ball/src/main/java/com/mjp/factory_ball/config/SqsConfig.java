@@ -13,11 +13,11 @@ import java.net.URI;
 @Configuration
 public class SqsConfig {
 
-    @Value("${aws.sns.endpoint}")
+    @Value("${aws.basic-config.endpoint}")
     private String url;
-    @Value("${aws.sns.credential.accessKey}")
+    @Value("${aws.basic-config.credential.accessKey}")
     private String accessKey;
-    @Value("${aws.sns.credential.secretKey}")
+    @Value("${aws.basic-config.credential.secretKey}")
     private String secretKey;
 
     @Bean

@@ -9,8 +9,16 @@ public class PaymentStatusRandomizer {
     private static final Random RANDOM = new Random();
 
     public static PaymentStatusType randomStatus() {
-        PaymentStatusType[] statuses = PaymentStatusType.values();
-        int randomIndex = RANDOM.nextInt(statuses.length);
-        return statuses[randomIndex];
+        PaymentStatusType[] weightedStatuses = {
+                PaymentStatusType.APPROVED_PAYMENT,
+                PaymentStatusType.APPROVED_PAYMENT,
+                PaymentStatusType.APPROVED_PAYMENT,
+                PaymentStatusType.APPROVED_PAYMENT,
+                PaymentStatusType.FAILED_PAYMENT
+        };
+
+
+        int randomIndex = RANDOM.nextInt(weightedStatuses.length);
+        return weightedStatuses[randomIndex];
     }
 }

@@ -7,7 +7,7 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sns.SnsClient;
-import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 import java.net.URI;
 
@@ -34,8 +34,8 @@ public class AwsConfig {
     }
 
     @Bean
-    public SqsClient sqsClient(){
-        return SqsClient.builder()
+    public SqsAsyncClient sqsClient(){
+        return SqsAsyncClient.builder()
                 .endpointOverride(URI.create(url))
                 .region(Region.US_EAST_1)
                 .credentialsProvider(StaticCredentialsProvider.create(

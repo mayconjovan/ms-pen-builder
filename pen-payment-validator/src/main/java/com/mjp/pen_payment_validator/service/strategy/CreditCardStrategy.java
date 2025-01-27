@@ -16,4 +16,9 @@ public class CreditCardStrategy implements PaymentValidatorStrategy {
 
         return details;
     }
+
+    @Override
+    public String sendNotification() {
+        return "";
+    }
 }
