@@ -1,12 +1,19 @@
 package com.mjp.factory_ball_support.entities;
 
-import com.mjp.factory_ball_support.records.FactoryBallSupportDetails;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "tb_factoryBallSupport")
+@Table(name = "tb_factory_ball_support")
 public class FactoryBallSupport {
 
     @Id
@@ -14,53 +21,6 @@ public class FactoryBallSupport {
     private UUID id;
     private String description;
     private Double size;
-    private String materialType;
-
-    public FactoryBallSupport() {
-    }
-    public FactoryBallSupport(FactoryBallSupportDetails details){
-        this.description = details.description();
-        this.size = details.size();
-        this.materialType = details.materialType();
-    }
-
-    public FactoryBallSupport(UUID id, String description, Double size, String materialType) {
-        this.id = id;
-        this.description = description;
-        this.size = size;
-        this.materialType = materialType;
-    }
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Double getSize() {
-        return size;
-    }
-
-    public void setSize(Double size) {
-        this.size = size;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getMaterialType() {
-        return materialType;
-    }
-
-    public void setMaterialType(String materialType) {
-        this.materialType = materialType;
-    }
+    private String material;
+    private Integer orderNumber;
 }

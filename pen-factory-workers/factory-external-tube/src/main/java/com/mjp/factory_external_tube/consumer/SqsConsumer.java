@@ -1,6 +1,5 @@
 package com.mjp.factory_external_tube.consumer;
 
-import com.mjp.factory_external_tube.records.FactoryExternalTubeDetails;
 import com.mjp.factory_external_tube.service.FactoryExternalTubeService;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import org.springframework.stereotype.Component;
@@ -14,9 +13,10 @@ public class SqsConsumer {
         this.service = service;
     }
 
-    @SqsListener("factory-external-tube")
-    public void listen(FactoryExternalTubeDetails details) {
-        service.createBallSupportCoupler(details);
+    @SqsListener("${aws.sqs.queue}")
+    public void messageReceiver(String message) {
+        service.createObject(message);
     }
+
 
 }

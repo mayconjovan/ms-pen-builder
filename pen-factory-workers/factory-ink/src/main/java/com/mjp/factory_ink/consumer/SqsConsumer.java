@@ -1,8 +1,8 @@
 package com.mjp.factory_ink.consumer;
 
-import com.mjp.factory_ink.records.FactoryInkDetails;
 import com.mjp.factory_ink.service.FactoryInkService;
 import io.awspring.cloud.sqs.annotation.SqsListener;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,9 +14,9 @@ public class SqsConsumer {
         this.service = service;
     }
 
-    @SqsListener("factory-ink")
-    public void listen(FactoryInkDetails details) {
-        service.createBallSupportCoupler(details);
+    @SqsListener("${aws.sqs.queue}")
+    public void messageReceiver(String message) {
+        service.createObject(message);
     }
 
 }

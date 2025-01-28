@@ -1,9 +1,17 @@
 package com.mjp.factory_tip_cap.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_factory_tip_cap")
 public class FactoryTipCap {
@@ -12,49 +20,8 @@ public class FactoryTipCap {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String description;
-    private Double size;
-    private String materialType;
+    private String color;
+    private String material;
+    private Integer orderNumber;
 
-    public FactoryTipCap() {
-    }
-
-    public FactoryTipCap(UUID id, String description, Double size, String materialType) {
-        this.id = id;
-        this.description = description;
-        this.size = size;
-        this.materialType = materialType;
-    }
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Double getSize() {
-        return size;
-    }
-
-    public void setSize(Double size) {
-        this.size = size;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getMaterialType() {
-        return materialType;
-    }
-
-    public void setMaterialType(String materialType) {
-        this.materialType = materialType;
-    }
 }

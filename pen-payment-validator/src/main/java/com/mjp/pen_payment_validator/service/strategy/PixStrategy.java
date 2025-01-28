@@ -18,4 +18,9 @@ public class PixStrategy implements PaymentValidatorStrategy {
 
         return details;
     }
+
+    @Override
+    public String sendNotification() {
+        return "";
+    }
 }

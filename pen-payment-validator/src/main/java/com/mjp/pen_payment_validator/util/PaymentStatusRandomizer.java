@@ -13,8 +13,8 @@ public class PaymentStatusRandomizer {
                 PaymentStatusType.APPROVED_PAYMENT,
                 PaymentStatusType.APPROVED_PAYMENT,
                 PaymentStatusType.APPROVED_PAYMENT,
-                PaymentStatusType.APPROVED_PAYMENT,
-                PaymentStatusType.FAILED_PAYMENT
+                PaymentStatusType.APPROVED_PAYMENT
+                //PaymentStatusType.FAILED_PAYMENT
         };
 
 

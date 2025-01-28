@@ -6,3 +6,5 @@ aws:
   sqs:
     queue: factory-tip-cap
 
+production:
+  delay-millis: 200

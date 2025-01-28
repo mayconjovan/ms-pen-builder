@@ -15,6 +15,8 @@ public class SqsConfig {
 
     @Value("${aws.basic-config.endpoint}")
     private String url;
+    @Value("${aws.basic-config.region}")
+    private String region;
     @Value("${aws.basic-config.credential.accessKey}")
     private String accessKey;
     @Value("${aws.basic-config.credential.secretKey}")
@@ -24,7 +26,7 @@ public class SqsConfig {
     public SqsAsyncClient sqsAsyncClient() {
         return SqsAsyncClient.builder()
                 .endpointOverride(URI.create(url))
-                .region(Region.US_EAST_1)
+                .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)
                 ))

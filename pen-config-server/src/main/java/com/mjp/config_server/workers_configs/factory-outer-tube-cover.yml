@@ -6,3 +6,5 @@ aws:
   sqs:
     queue: factory-outer-tube-cover
 
+production:
+  delay-millis: 200

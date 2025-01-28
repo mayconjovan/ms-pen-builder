@@ -1,6 +1,5 @@
 package com.mjp.factory_tip_cap.consumer;
 
-import com.mjp.factory_tip_cap.records.FactoryTipCapDetails;
 import com.mjp.factory_tip_cap.service.FactoryTipCapService;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import org.springframework.stereotype.Component;
@@ -14,9 +13,9 @@ public class SqsConsumer {
         this.service = service;
     }
 
-    @SqsListener("factory-tip-cap")
-    public void listen(FactoryTipCapDetails details) {
-        service.createBallSupportCoupler(details);
+    @SqsListener("${aws.sqs.queue}")
+    public void messageReceiver(String message) {
+        service.createObject(message);
     }
 
 }

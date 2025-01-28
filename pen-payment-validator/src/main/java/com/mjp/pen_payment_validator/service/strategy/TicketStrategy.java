@@ -18,4 +18,9 @@ public class TicketStrategy implements PaymentValidatorStrategy {
 
         return details;
     }
+
+    @Override
+    public String sendNotification() {
+        return "";
+    }
 }

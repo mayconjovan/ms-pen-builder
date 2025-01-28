@@ -5,3 +5,6 @@ server:
 aws:
   sqs:
     queue: factory-ball
+
+production:
+  delay-millis: 200

@@ -6,3 +6,5 @@ aws:
   sqs:
     queue: factory-internal-tube
 
+production:
+  delay-millis: 200

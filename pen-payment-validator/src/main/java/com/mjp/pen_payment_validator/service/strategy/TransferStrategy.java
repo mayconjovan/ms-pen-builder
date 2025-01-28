@@ -15,4 +15,9 @@ public class TransferStrategy implements PaymentValidatorStrategy {
         details.setPaymentStatusType(randomStatus);
         return details;
     }
+
+    @Override
+    public String sendNotification() {
+        return "";
+    }
 }

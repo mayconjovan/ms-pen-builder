@@ -8,12 +8,12 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity
-@Table(name = "tb_factoryBall")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "tb_factory_ball")
 public class FactoryBall {
 
     @Id
