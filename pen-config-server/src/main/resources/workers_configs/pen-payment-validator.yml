@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/pen-processor-order
+
+server:
+  name: pen-payment-validator
+  port: 8010
+
+
+
+aws:
+  sqs:
+    queue: payment-validator
+  sns:
+    topic: notify-payment
+  basic-config:
+    endpoint: http://localhost:4566
+

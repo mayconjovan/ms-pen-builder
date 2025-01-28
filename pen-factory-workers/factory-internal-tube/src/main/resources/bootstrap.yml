@@ -3,4 +3,4 @@ spring:
     name: factory-internal-tube
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: http://ms-config-server:8888

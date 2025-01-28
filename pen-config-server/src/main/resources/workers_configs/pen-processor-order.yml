@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/pen-processor-order
+    url: jdbc:postgresql://localhost:5433/pen-processor-order
 aws:
   sns:
     endpoint: http://localhost:4566

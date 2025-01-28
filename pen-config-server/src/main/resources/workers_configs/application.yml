@@ -1,7 +1,7 @@
 #This file has configs default for all microservices
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/pen-parts
+    url: jdbc:postgresql://factory-db:5432/pen-factory
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
@@ -18,7 +18,7 @@ spring:
 
 aws:
   basic-config:
-    endpoint: http://localhost:4566
+    endpoint: http://localstack:4566
     region: us-east-1
     credential:
       accessKey: test
