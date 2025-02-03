@@ -13,7 +13,7 @@ echo "🚀 Iniciando criação de segredos no LocalStack..."
 
 # Criar segredos
 SECRET_NAME="db-factory-credentials"
-SECRET_VALUE=$(printf '{"username":"postgres","password":"123456","host":"factory-db","port":"5432","dbname":"pen-factory"}')
+SECRET_VALUE=$(printf '{"url":"jdbc:postgresql://localhost:5432/", "username":"postgres","password":"123456","host":"factory-db","port":"5432","dbname":"pen-factory"}')
 
 aws --endpoint-url=$LOCALSTACK_ENDPOINT secretsmanager create-secret \
   --name "$SECRET_NAME" \
@@ -22,7 +22,7 @@ aws --endpoint-url=$LOCALSTACK_ENDPOINT secretsmanager create-secret \
 echo "✅ Segredo '$SECRET_NAME' criado."
 
 SECRET_NAME_SECONDARY="db-orders-credentials"
-SECRET_VALUE_SECONDARY=$(printf '{"username":"postgres","password":"123456","host":"localhost","port":"5432","dbname":"pen-processor-order"}')
+SECRET_VALUE_SECONDARY=$(printf '{"url":"jdbc:postgresql://localhost:5432/", "username":"postgres","password":"123456","host":"localhost","port":"5432","dbname":"pen-processor-order"}')
 
 aws --endpoint-url=$LOCALSTACK_ENDPOINT secretsmanager create-secret \
   --name "$SECRET_NAME_SECONDARY" \

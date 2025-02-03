@@ -6,8 +6,6 @@ server:
   name: pen-payment-validator
   port: 8010
 
-
-
 aws:
   sqs:
     queue: payment-validator

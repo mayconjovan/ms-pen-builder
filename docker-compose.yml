@@ -6,7 +6,7 @@ services:
       - "4566:4566"
       - "4575:4575"
     environment:
-      - SERVICES=sns,sqs,secretsmanager
+      - SERVICES=sns,sqs,secretsmanager,ssm
       - DEBUG=1
       - AWS_DEFAULT_REGION=us-east-1
       - HOSTNAME_EXTERNAL=localhost
@@ -19,20 +19,20 @@ services:
   # Outros serviços...
 
 
-#  pen-factory-db:
-#    image: postgres:15
-#    container_name: factory-db
-#    restart: always
-#    environment:
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: 123456
-#      POSTGRES_DB: pen-factory
-#    ports:
-#      - "5432:5432"
-#    networks:
-#      - localstack-network
-#    volumes:
-#      - factory-db-data:/var/lib/postgresql/data
+  pen-factory-db:
+    image: postgres:15
+    container_name: factory-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: pen-factory
+    ports:
+      - "5432:5432"
+    networks:
+      - localstack-network
+    volumes:
+      - factory-db-data:/var/lib/postgresql/data
 #
 #  pen-order-db:
 #    image: postgres:15
@@ -159,6 +159,6 @@ services:
 networks:
   localstack-network:
     driver: bridge
-#volumes:
-#  factory-db-data:
+volumes:
+  factory-db-data:
 #  order-db-data:

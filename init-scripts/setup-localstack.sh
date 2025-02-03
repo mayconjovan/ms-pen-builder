@@ -14,5 +14,6 @@ echo "🚀 Iniciando configuração do LocalStack..."
 ./create-secrets.sh
 ./create-sns-topics.sh
 ./create-sqs-queues.sh
+./create-parameters-store.sh
 
 echo "🎉 Configuração do LocalStack concluída com sucesso!"

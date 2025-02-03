@@ -23,10 +23,10 @@ public class OrderController {
 
 
     @GetMapping
-    public ResponseEntity<Page<OrderProcessDTO>> findAllOrdersPaged(Pageable pageable,
+    public ResponseEntity<Page<OrderProcessDTO>> findAllPaged(Pageable pageable,
             @RequestParam(value = "payment-status", required = false) String paymentStatus) {
 
-        Page<OrderProcessDTO> list = service.findAllOrdersPaged(pageable, paymentStatus);
+        Page<OrderProcessDTO> list = service.findAllPaged(pageable, paymentStatus);
 
         return ResponseEntity.ok().body(list);
     }

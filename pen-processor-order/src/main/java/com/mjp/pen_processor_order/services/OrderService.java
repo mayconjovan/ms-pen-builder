@@ -88,7 +88,6 @@ public class OrderService {
         updateOrderStatus(orders);
         return orderProcessDTOs.stream().map(OrderProcessDTO::orderNumber).toList();
     }
-
     private List<OrderProcess> findOrdersToStartProduction() {
         return repository.findAllByOrderStatusAndPaymentDetails_PaymentStatusType(OrderStatusType.PENDING,
                 PaymentStatusType.APPROVED_PAYMENT);
@@ -101,7 +100,7 @@ public class OrderService {
 
 
     //Atualizar isso para receber um filtro com varios parametros (Criteria? By Example talvez)
-    public Page<OrderProcessDTO> findAllOrdersPaged(Pageable pageable, String paymentStatus) {
+    public Page<OrderProcessDTO> findAllPaged(Pageable pageable, String paymentStatus) {
         Page<OrderProcess> orders;
 
         if (paymentStatus != null) {

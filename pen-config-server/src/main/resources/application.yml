@@ -11,23 +11,26 @@ server:
   port: 8888
   name: config-server
 
-aws:
-  sns:
-    topics:
-      factory-topic:
-        - factory-ball
-        - factory-ball-support
-        - factory-ball-support-coupler-ink-tube
-        - factory-external-tube
-        - factory-ink
-        - factory-internal-tube
-        - factory-outer-tube-cover
-        - factory-tip-cap
-      notify-payment-topic:
-        - notify-payment
-  endpoint: http://localstack:4566
-  region: us-east-1
-  accessKey: test
-  secretKey: test
+#aws:
+#  sns:
+#    topics:
+#      factory-topic:
+#        - factory-ball
+#        - factory-ball-support
+#        - factory-ball-support-coupler-ink-tube
+#        - factory-external-tube
+#        - factory-ink
+#        - factory-internal-tube
+#        - factory-outer-tube-cover
+#        - factory-tip-cap
+#      notify-payment-topic:
+#        - notify-payment
+#  endpoint: http://localstack:4566
+#  region: us-east-1
+#  accessKey: test
+#  secretKey: test
+
+
+
 s3:
   bucket-name: config-bucket
