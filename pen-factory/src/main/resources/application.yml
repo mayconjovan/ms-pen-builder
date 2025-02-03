@@ -1,0 +1,8 @@
+#mover estas propriedades para o config-server
+#aws:
+#  basic-config:
+#    endpoint: http://localhost:4566
+#    region: us-east-1
+#    credential:
+#      accessKey: test
+#      secretKey: test
