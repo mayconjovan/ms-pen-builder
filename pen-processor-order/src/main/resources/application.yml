@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/pen-processor-order
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update  # Pode ser update, create, create-drop ou validate
+    show-sql: true  # Exibe as queries no console
+
+aws:
+  sqs:
+    queue: factory

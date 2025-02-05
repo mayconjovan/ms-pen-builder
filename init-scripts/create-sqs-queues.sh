@@ -23,7 +23,7 @@ fi
 
 # Mapear tópicos SNS para suas filas SQS
 declare -A TOPIC_TO_QUEUES
-TOPIC_TO_QUEUES["$FACTORY_TOPIC_ARN"]="factory-ball factory-ball-support factory-ball-support-coupler-ink-tube factory-external-tube factory-ink factory-internal-tube factory-outer-tube-cover factory-tip-cap"
+TOPIC_TO_QUEUES["$FACTORY_TOPIC_ARN"]="factory"
 TOPIC_TO_QUEUES["$PAYMENT_TOPIC_ARN"]="payment-notification"
 
 

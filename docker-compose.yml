@@ -33,22 +33,22 @@ services:
       - localstack-network
     volumes:
       - factory-db-data:/var/lib/postgresql/data
-#
-#  pen-order-db:
-#    image: postgres:15
-#    container_name: order-db
-#    restart: always
-#    environment:
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: 123456
-#      POSTGRES_DB: pen-processor-order
-#    ports:
-#      - "5433:5432"
-#    networks:
-#      - localstack-network
-#    volumes:
-#      - order-db-data:/var/lib/postgresql/data
-#
+
+  pen-order-db:
+    image: postgres:15
+    container_name: order-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: pen-processor-order
+    ports:
+      - "5433:5432"
+    networks:
+      - localstack-network
+    volumes:
+      - order-db-data:/var/lib/postgresql/data
+
 #  #config-server
 #  ms-config-server:
 #    container_name: ms-config-server
@@ -68,87 +68,10 @@ services:
 #    networks:
 #      - localstack-network
 #
-#  ms-factory-ball:
-#    container_name: ms-factory-ball
+#  ms-factory:
+#    container_name: ms-factory
 #    build:
-#      context: ./pen-factory-workers/factory-ball
-#      dockerfile: Dockerfile
-#    depends_on:
-#      - pen-factory-db
-#      - ms-config-server
-#    networks:
-#      - localstack-network
-#
-#  ms-factory-ball-support:
-#    container_name: ms-factory-ball-support
-#    build:
-#      context: ./pen-factory-workers/factory-ball-support
-#      dockerfile: Dockerfile
-#    depends_on:
-#      - pen-factory-db
-#      - ms-config-server
-#    networks:
-#      - localstack-network
-#
-#  factory-ball-support-coupler-ink-tube:
-#    container_name: ms-factory-ball-support-coupler-ink-tube
-#    build:
-#      context: ./pen-factory-workers/factory-ball-support-coupler-ink-tube
-#      dockerfile: Dockerfile
-#    depends_on:
-#      - pen-factory-db
-#      - ms-config-server
-#    networks:
-#      - localstack-network
-#
-#  factory-external-tube:
-#    container_name: ms-factory-external-tube
-#    build:
-#      context: ./pen-factory-workers/factory-external-tube
-#      dockerfile: Dockerfile
-#    depends_on:
-#      - pen-factory-db
-#      - ms-config-server
-#    networks:
-#      - localstack-network
-#
-#  ms-factory-ink:
-#    container_name: ms-factory-ink
-#    build:
-#      context: ./pen-factory-workers/factory-ink
-#      dockerfile: Dockerfile
-#    depends_on:
-#      - pen-factory-db
-#      - ms-config-server
-#    networks:
-#      - localstack-network
-#
-#  ms-factory-internal-tube:
-#    container_name: ms-factory-internal-tube
-#    build:
-#      context: ./pen-factory-workers/factory-internal-tube
-#      dockerfile: Dockerfile
-#    depends_on:
-#      - pen-factory-db
-#      - ms-config-server
-#    networks:
-#      - localstack-network
-#
-#  ms-factory-outer-tube-cover:
-#    container_name: ms-factory-outer-tube-cover
-#    build:
-#      context: ./pen-factory-workers/factory-outer-tube-cover
-#      dockerfile: Dockerfile
-#    depends_on:
-#      - pen-factory-db
-#      - ms-config-server
-#    networks:
-#      - localstack-network
-#
-#  ms-factory-tip-cap:
-#    container_name: ms-factory-tip-cap
-#    build:
-#      context: ./pen-factory-workers/factory-tip-cap
+#      context: ./pen-factory/factory
 #      dockerfile: Dockerfile
 #    depends_on:
 #      - pen-factory-db
@@ -161,4 +84,4 @@ networks:
     driver: bridge
 volumes:
   factory-db-data:
-#  order-db-data:
+  order-db-data:

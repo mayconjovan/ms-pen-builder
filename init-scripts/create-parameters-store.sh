@@ -13,14 +13,7 @@ AWS_REGION="us-east-1"
 
 # Lista de workers
 SERVER_LIST=(
-    "factory-ball"
-    "factory-ball-support"
-    "factory-ball-support-coupler-ink-tube"
-    "factory-external-tube"
-    "factory-ink"
-    "factory-internal-tube"
-    "factory-outer-tube-cover"
-    "factory-tip-cap"
+    "factory"
 )
 
 # Criando os parâmetros dinamicamente
@@ -37,6 +30,9 @@ for SERVER in "${SERVER_LIST[@]}"; do
 
     aws ssm put-parameter --endpoint-url "$AWS_ENDPOINT" --region "$AWS_REGION" --name "$SERVER/delay-millis" \
         --value "200" --type "String" --overwrite
+
+    aws ssm put-parameter --endpoint-url "$AWS_ENDPOINT" --region "$AWS_REGION" --name "$SERVER/listener" \
+        --value "$SERVER" --type "String" --overwrite
 
     ((PORT++))  # Incrementa a porta para o próximo serviço
 done
