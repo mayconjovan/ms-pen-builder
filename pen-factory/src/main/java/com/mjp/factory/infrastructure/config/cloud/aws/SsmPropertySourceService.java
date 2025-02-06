@@ -1,8 +1,6 @@
 package com.mjp.factory.infrastructure.config.cloud.aws;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.PropertySource;
-import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.ssm.SsmClient;
 import software.amazon.awssdk.services.ssm.model.GetParameterRequest;
 import software.amazon.awssdk.services.ssm.model.GetParameterResponse;

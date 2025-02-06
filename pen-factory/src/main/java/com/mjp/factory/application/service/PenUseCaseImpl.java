@@ -7,16 +7,13 @@ import com.mjp.factory.application.usecases.PenUseCase;
 import com.mjp.factory.domain.model.Pen;
 import com.mjp.factory.domain.repositories.PenRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@DependsOn("ssmConfig")
-public class PenServiceImpl implements PenUseCase {
+public class PenUseCaseImpl implements PenUseCase {
 
     @Value("${delay-millis}")
     private Integer delayProduction;
@@ -24,7 +21,7 @@ public class PenServiceImpl implements PenUseCase {
     private final PenRepository penRepository;
     private final ObjectMapper objectMapper;
 
-    public PenServiceImpl(PenRepository penRepository, ObjectMapper objectMapper) {
+    public PenUseCaseImpl(PenRepository penRepository, ObjectMapper objectMapper) {
         this.penRepository = penRepository;
         this.objectMapper = objectMapper;
     }
@@ -32,8 +29,8 @@ public class PenServiceImpl implements PenUseCase {
     @Override
     public void createObject(String message) {
         List<Pen> pens = extractMessageData(message);
-        System.out.println("Building pens from order: " + pens.getFirst().getUuid());
-        //penRepository.getPenByUUID(UUID.randomUUID());
+        System.out.println("Building pens from order: " + pens.getFirst().getOrderNumber());
+        penRepository.saveAll(pens);
     }
 
     private List<Pen> extractMessageData(String message) {
@@ -51,26 +48,26 @@ public class PenServiceImpl implements PenUseCase {
 
             pensNode.forEach(penNode -> {
                 //quantity usado para calcular o atraso na produção
-                JsonNode quantityNode = penNode.get("quantity");
-                Long quantity = Long.parseLong(quantityNode.asText());
+                //JsonNode quantityNode = penNode.get("quantity");
+                //Long quantity = Long.parseLong(quantityNode.asText());
 
-                JsonNode node = penNode.get("pen");
+                //JsonNode node = penNode.get("pen");
 
-                if (node != null) {
+               // if (node != null) {
                     try {
-                        Pen object = objectMapper.treeToValue(node, Pen.class);
+                        Pen object = objectMapper.treeToValue(penNode, Pen.class);
                         object.setOrderNumber(orderNumber);
                         list.add(object);
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
-                }
+                //}
 
-                try {
-                    Thread.sleep(quantity * delayProduction);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+//                try {
+//                    Thread.sleep(quantity * delayProduction);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
             });
             return list;
 

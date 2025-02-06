@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_ball_support_coupler_ink")
-public class JpaBallSupportCouplerInkTubeEntity extends BallSupportCouplerInkTube {
+public class JpaBallSupportCouplerInkTubeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -44,4 +44,10 @@ public class JpaBallSupportCouplerInkTubeEntity extends BallSupportCouplerInkTub
     private JpaPenEntity pen;
 
 
+    public JpaBallSupportCouplerInkTubeEntity(BallSupportCouplerInkTube ballSupportCouplerInkTube) {
+        this.description = ballSupportCouplerInkTube.getDescription();
+        this.material = ballSupportCouplerInkTube.getMaterial();
+        this.orderNumber = ballSupportCouplerInkTube.getOrderNumber();
+        this.color = ballSupportCouplerInkTube.getColor();
+    }
 }

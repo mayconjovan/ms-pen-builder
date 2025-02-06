@@ -3,7 +3,7 @@ package com.mjp.factory.domain.model;
 import java.util.UUID;
 
 
-public abstract class OuterTubeCover {
+public class OuterTubeCover {
 
     private UUID id;
     private String description;

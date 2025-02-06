@@ -1,7 +1,6 @@
 package com.mjp.factory.infrastructure.config.database.postgres;
 
 import com.mjp.factory.infrastructure.config.cloud.aws.SecretsManagerService;
-import com.mjp.factory.infrastructure.config.database.DataSourceConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;

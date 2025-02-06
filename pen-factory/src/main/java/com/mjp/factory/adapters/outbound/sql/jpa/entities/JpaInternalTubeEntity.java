@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_internal_tube")
-public class JpaInternalTubeEntity extends InternalTube {
+public class JpaInternalTubeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -41,4 +41,11 @@ public class JpaInternalTubeEntity extends InternalTube {
     @OneToOne
     @JoinColumn(name = "ball_support", referencedColumnName = "id")
     private JpaPenEntity pen;
+
+    public JpaInternalTubeEntity(InternalTube internalTube) {
+        this.description = internalTube.getDescription();
+        this.material = internalTube.getMaterial();
+        this.orderNumber = internalTube.getOrderNumber();
+        this.color = internalTube.getColor();
+    }
 }

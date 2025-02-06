@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
-import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.ssm.SsmClient;
 
 import java.util.HashMap;

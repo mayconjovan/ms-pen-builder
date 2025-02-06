@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/pen-processor-order
+    url: jdbc:postgresql://localhost:5433/pen-processor-order
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
@@ -12,4 +12,17 @@ spring:
 
 aws:
   sqs:
-    queue: factory
+    queue: payment-validator
+  sns:
+    topic: notify-payment
+  basic-config:
+    endpoint: http://localhost:4566
+    region: us-east-1
+    credential:
+      accessKey: test
+      secretKey: test
+
+
+server:
+  name: pen-payment-validator
+  port: 8010

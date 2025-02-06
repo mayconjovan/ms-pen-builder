@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_ball_support")
-public class JpaBallSupportEntity extends BallSupport {
+public class JpaBallSupportEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -42,4 +42,10 @@ public class JpaBallSupportEntity extends BallSupport {
     @JoinColumn(name = "ball_support", referencedColumnName = "id")
     private JpaPenEntity pen;
 
+    public JpaBallSupportEntity(BallSupport ballSupport) {
+        this.description = ballSupport.getDescription();
+        this.material = ballSupport.getMaterial();
+        this.orderNumber = ballSupport.getOrderNumber();
+        this.size = ballSupport.getSize();
+    }
 }

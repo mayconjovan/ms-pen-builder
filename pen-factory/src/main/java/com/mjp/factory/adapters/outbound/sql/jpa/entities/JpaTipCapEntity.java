@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_tip_cap")
-public class JpaTipCapEntity extends TipCap {
+public class JpaTipCapEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -41,4 +41,11 @@ public class JpaTipCapEntity extends TipCap {
     @OneToOne
     @JoinColumn(name = "ball_support", referencedColumnName = "id")
     private JpaPenEntity pen;
+
+    public JpaTipCapEntity(TipCap tipCap) {
+        this.description = tipCap.getDescription();
+        this.material = tipCap.getMaterial();
+        this.orderNumber = tipCap.getOrderNumber();
+        this.color = tipCap.getColor();
+    }
 }

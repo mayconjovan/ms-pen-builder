@@ -11,5 +11,18 @@ spring:
     show-sql: true  # Exibe as queries no console
 
 aws:
+  sns:
+    endpoint: http://localhost:4566
+    topic-name: factory-topic
+    credential:
+      accessKey: test
+      secretKey: test
+  region: us-east-1
   sqs:
-    queue: factory
+    endpoint: http://localhost:4566
+    queue: payment-validator
+    listener: payment-notification
+
+server:
+  name: Processor Order
+  port: 8090

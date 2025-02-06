@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_ink")
-public class JpaInkEntity extends Ink {
+public class JpaInkEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -42,4 +42,10 @@ public class JpaInkEntity extends Ink {
     @JoinColumn(name = "ball_support", referencedColumnName = "id")
     private JpaPenEntity pen;
 
+    public JpaInkEntity(Ink ink) {
+        this.description = ink.getDescription();
+        this.material = ink.getMaterial();
+        this.orderNumber = ink.getOrderNumber();
+        this.color = ink.getColor();
+    }
 }

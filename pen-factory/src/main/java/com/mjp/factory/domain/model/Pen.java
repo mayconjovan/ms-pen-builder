@@ -3,7 +3,7 @@ package com.mjp.factory.domain.model;
 import java.util.UUID;
 
 
-public abstract class Pen {
+public class Pen {
 
     private UUID uuid;
     private Ball ball;
